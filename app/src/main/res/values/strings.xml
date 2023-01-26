@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">E-Cart</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="refer_earn"><![CDATA[Refer & Earn]]></string>
+    <string name="add_edit_address"><![CDATA[Add & edit address]]></string>
+    <string name="previous_orders_details"><![CDATA[Previous orders & details]]></string>
+    <string name="faq_s_links"><![CDATA[FAQ’s & links]]></string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_fames_lectus_fermentum_ultrices_ipsum_ornare_id_lorem_vestibulum_congue_quis_nulla_vel_consectetur_ultrices_nulla_est_faucibus_mollis_faucibus_sed_libero_amet_facilisis_ut_arcu_facilisis_egestas_iaculis_nec_sit_donec_adipiscing_ac_massa_egestas">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames lectus fermentum ultrices ipsum ornare id lorem vestibulum, congue. Quis nulla vel consectetur ultrices. Nulla est faucibus mollis faucibus sed libero amet. Facilisis ut arcu facilisis egestas iaculis nec sit. Donec adipiscing ac massa egestas.</string>
+</resources>
