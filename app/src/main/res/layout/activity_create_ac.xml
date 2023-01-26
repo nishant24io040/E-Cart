@@ -30,7 +30,7 @@
             android:ems="10"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center_vertical"
-            android:hint="Create Password"
+            android:hint="@string/create_password"
             android:inputType="textPassword"
             android:paddingStart="20dp"
             android:textColorHint="#959595"
