@@ -37,7 +37,7 @@ public class SplashScreen extends AppCompatActivity {
         }
         if(appLinkData!=null)
         {
-            Intent intent = new Intent(SplashScreen.this, HomeActivity.class);
+            Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
             startActivity(intent);
             finish();
             finish();
@@ -51,7 +51,7 @@ public class SplashScreen extends AppCompatActivity {
                                     @Override
                                     public void run()
                                     {
-                                        Intent intent = new Intent(SplashScreen.this, HomeActivity.class);
+                                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
