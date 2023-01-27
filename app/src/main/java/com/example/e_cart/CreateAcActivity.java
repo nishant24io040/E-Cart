@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,9 +19,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -49,11 +52,16 @@ public class CreateAcActivity extends AppCompatActivity {
         confirmpassword = findViewById(R.id.pasword2);
         googlelogin = findViewById(R.id.google);
         btnsignup = findViewById(R.id.signup);
+        if(mAuth.getCurrentUser()!=null){
+            Intent intent = new Intent(this,HomeActivity.class);
+            startActivity(intent);
+        }
 
         tv1.setOnClickListener(view -> {
             Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
         });
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -61,13 +69,47 @@ public class CreateAcActivity extends AppCompatActivity {
 
 
         googlelogin.setOnClickListener(v -> {
+
             signIn();
         });
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        btnsignup.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(email.getText())){
+                email.setError("Email cannot be empty");
+                email.requestFocus();
+            }else if (TextUtils.isEmpty(password.getText())){
+                password.setError("Password cannot be empty");
+                password.requestFocus();
+            }
+            else if (password.getText()== confirmpassword.getText()) {
+                confirmpassword.setError("Password is not matching");
+                confirmpassword.requestFocus();
+            } else {
+                signup();
+            }
+        });
 
 
     }
+
+    private void signup() {
+        mAuth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(CreateAcActivity.this, "signup successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CreateAcActivity.this,LoginActivity.class));
+                }
+                else {
+                    Toast.makeText(CreateAcActivity.this, "signup error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+    }
+
     int RC_SIGN_IN = 65;
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -107,40 +149,6 @@ public class CreateAcActivity extends AppCompatActivity {
                 });
     }
 
-//    private void otpsend() {
-//        mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//
-//            @Override
-//            public void onVerificationCompleted(PhoneAuthCredential credential) {
-//
-//            }
-//
-//            @Override
-//            public void onVerificationFailed(FirebaseException e) {
-//                Toast.makeText(CreateAcActivity.this, "error occur", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onCodeSent(@NonNull String verificationId,
-//                                   @NonNull PhoneAuthProvider.ForceResendingToken token) {
-////                ModalForLogIn user = new ModalForLogIn(fname.getText().toString(),phone.getText().toString(),mAuth.getUid(),bs);
-////                myref = firebaseDatabase.getReference("Users").child(mAuth.getUid()).setValue(user);
-//                Intent intent = new Intent(CreateAcActivity.this ,VerifyOTP.class);
-//                intent.putExtra("bs",bs);
-//                intent.putExtra("phone",phone.getText().toString());
-//                intent.putExtra("verficationId",verificationId);
-//                intent.putExtra("identity","create");
-//                startActivity(intent);
-//            }
-//        };
-//        PhoneAuthOptions options =
-//                PhoneAuthOptions.newBuilder(mAuth)
-//                        .setPhoneNumber("+91"+phone.getText().toString())       // Phone number to verify
-//                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-//                        .setActivity(this)                 // Activity (for callback binding)
-//                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-//                        .build();
-//        PhoneAuthProvider.verifyPhoneNumber(options);
-//    }
+
+
 }
