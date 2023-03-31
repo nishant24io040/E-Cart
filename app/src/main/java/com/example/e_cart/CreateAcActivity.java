@@ -30,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
@@ -100,6 +101,7 @@ public class CreateAcActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(CreateAcActivity.this, "signup successfully", Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase.getInstance().getReference("Accounts").child(mAuth.getCurrentUser().getUid()).setValue("User");
                     startActivity(new Intent(CreateAcActivity.this,LoginActivity.class));
                 }
                 else {

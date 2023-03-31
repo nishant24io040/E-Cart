@@ -24,9 +24,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView tv1;
+    TextView tv1,vendors;
     EditText email,password;
     Button btnlogin;
     ImageView img;
@@ -39,14 +45,38 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         tv1 = findViewById(R.id.tv1);
         email = findViewById(R.id.email1);
+        vendors = findViewById(R.id.vendors);
         password = findViewById(R.id.pasword1);
         btnlogin = findViewById(R.id.btnlogin);
         img = findViewById(R.id.googlelogin);
         if(mAuth.getCurrentUser()!=null){
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            FirebaseDatabase.getInstance().getReference("Accounts").child(mAuth.getCurrentUser().getUid())
+                    .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String s = (String) snapshot.getValue();
+                    if (Objects.equals(s, "Vendor")){
+                        startActivity(new Intent(LoginActivity.this,VendorsPostSignup.class));
+                    }
+                    else {
+                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
         tv1.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this,CreateAcActivity.class);
+            startActivity(intent);
+        });
+        vendors.setOnClickListener(v -> {
+            Intent intent = new Intent(this,VendorLogin.class);
             startActivity(intent);
         });
 

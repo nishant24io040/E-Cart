@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="@+id/btnlogin" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/vendors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"

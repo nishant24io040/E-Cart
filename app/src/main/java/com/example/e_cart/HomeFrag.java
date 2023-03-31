@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 
 public class HomeFrag extends Fragment {
-    ImageView iv1,iv2,iv3,iv4,iv5,iv6;
+    ImageView iv1,iv2,iv3,iv4,iv5,iv6,openmap;
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,7 +25,11 @@ public class HomeFrag extends Fragment {
         iv4 = view.findViewById(R.id.iv4);
         iv5 = view.findViewById(R.id.iv5);
         iv6 = view.findViewById(R.id.iv6);
+        openmap = view.findViewById(R.id.loca);
 
+        openmap.setOnClickListener(v -> {
+            openMap();
+        });
         iv1.setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(),ShopDetails.class);
             intent.putExtra("1st",1);
@@ -59,5 +63,10 @@ public class HomeFrag extends Fragment {
 
 
         return view;
+    }
+    private void openMap(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
     }
 }

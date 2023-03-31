@@ -32,15 +32,15 @@
         android:text="MP Nagar"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/openmap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@+id/openmap"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.47" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/openmap"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/loca"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/baseline_location_on_24" />
