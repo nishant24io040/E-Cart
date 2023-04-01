@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +25,7 @@ public class VendorLogin extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText email,password;
     Button btnlogin;
+    ImageView eye;
 
 
     @Override
@@ -33,6 +38,7 @@ public class VendorLogin extends AppCompatActivity {
         password = findViewById(R.id.pasword1);
         btnlogin = findViewById(R.id.btnlogin);
         user = findViewById(R.id.user);
+        eye=findViewById(R.id.imageView3);
         user.setOnClickListener(v -> {
             Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
@@ -56,6 +62,22 @@ public class VendorLogin extends AppCompatActivity {
                 login();
             }
 
+        });
+
+        eye.setImageResource(R.drawable.eyeoff);
+        eye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                    // if password is visble then unvisibale it.
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    eye.setImageResource(R.drawable.eyeoff);
+                }
+                else {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    eye.setImageResource(R.drawable.baseline_remove_red_eye_24);
+                }
+            }
         });
 
     }

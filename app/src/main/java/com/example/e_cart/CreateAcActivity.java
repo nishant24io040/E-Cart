@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,7 +41,7 @@ public class CreateAcActivity extends AppCompatActivity {
     TextView tv1;
     Button btnsignup;
     GoogleSignInClient mGoogleSignInClient;
-    ImageView googlelogin;
+    ImageView googlelogin,cre_pwd_eye_img,con_pwd_eye_img;
     EditText email,phone,password,confirmpassword;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -53,6 +56,9 @@ public class CreateAcActivity extends AppCompatActivity {
         confirmpassword = findViewById(R.id.pasword2);
         googlelogin = findViewById(R.id.google);
         btnsignup = findViewById(R.id.signup);
+        cre_pwd_eye_img=findViewById(R.id.imageView12);
+        con_pwd_eye_img=findViewById(R.id.imageView11);
+
         if(mAuth.getCurrentUser()!=null){
             Intent intent = new Intent(this,HomeActivity.class);
             startActivity(intent);
@@ -91,7 +97,37 @@ public class CreateAcActivity extends AppCompatActivity {
             }
         });
 
+        cre_pwd_eye_img.setImageResource(R.drawable.eyeoff);
+        cre_pwd_eye_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                    // if password is visible hide it.
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    cre_pwd_eye_img.setImageResource(R.drawable.eyeoff);
+                }
+                else {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    cre_pwd_eye_img.setImageResource(R.drawable.baseline_remove_red_eye_24);
+                }
+            }
+        });
 
+        con_pwd_eye_img.setImageResource(R.drawable.eyeoff);
+        con_pwd_eye_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(confirmpassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                    // if password is visible hide it.
+                    confirmpassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    con_pwd_eye_img.setImageResource(R.drawable.eyeoff);
+                }
+                else {
+                    confirmpassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    con_pwd_eye_img.setImageResource(R.drawable.baseline_remove_red_eye_24);
+                }
+            }
+        });
     }
 
     private void signup() {

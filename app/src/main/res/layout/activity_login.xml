@@ -152,6 +152,7 @@
             android:background="@drawable/buttonbg"
             android:fontFamily="@font/poppins_medium"
             android:text="Login"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@+id/pasword1"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/pasword1"

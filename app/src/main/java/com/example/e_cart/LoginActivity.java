@@ -1,11 +1,17 @@
 package com.example.e_cart;
 
+import static com.example.e_cart.R.drawable.baseline_remove_red_eye_24;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv1,vendors;
     EditText email,password;
     Button btnlogin;
-    ImageView img;
+    ImageView img,eye;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -49,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.pasword1);
         btnlogin = findViewById(R.id.btnlogin);
         img = findViewById(R.id.googlelogin);
+        eye=findViewById(R.id.imageView3);
         if(mAuth.getCurrentUser()!=null){
             FirebaseDatabase.getInstance().getReference("Accounts").child(mAuth.getCurrentUser().getUid())
                     .addValueEventListener(new ValueEventListener() {
@@ -99,6 +106,24 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
 
+        });
+
+        eye.setImageResource(R.drawable.eyeoff);
+        eye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())){
+                    // if visible then unvisible it.
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    //change eye icon
+                    eye.setImageResource(R.drawable.eyeoff);
+                }
+                else {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    eye.setImageResource(baseline_remove_red_eye_24);
+                }
+
+            }
         });
 
     }
@@ -156,5 +181,11 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "error in else", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }
